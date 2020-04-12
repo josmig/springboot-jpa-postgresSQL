@@ -1,0 +1,49 @@
+package com.example.demo.model.Dao;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import com.example.demo.model.Entity.Cliente;
+
+//Marcamos la clase como repository , es una anotacion para marcar la clase 
+//como componente de persistencia de acceso a datos
+@Repository
+public class ClienteDaoImpl implements IClienteDao{
+
+	//Esto maneja la persistencia de datos , consultas de JPA
+	@PersistenceContext
+	private EntityManager em;
+	
+	
+	@SuppressWarnings("unchecked")
+	//decimos que no no solamente es de lectura , si no de escritura
+	//@Transactional(readOnly = true) Movemos todos los transactional a los service
+	@Override
+	public List<Cliente> findAll() {
+		return em.createQuery("from Cliente").getResultList();
+	}
+
+	@Override
+	public void save(Cliente cliente) {
+		if(cliente.getId() != null && cliente.getId()> 0){
+			//Si cliente es diferente a nullo y mayor a cero entonces existe y necesito que me edites!!!
+			em.merge(cliente);
+		}else{ // SI NO GUARDALO
+			em.persist(cliente); //con el persist mete el objeto al objeto de persistencia para guardarlo en la BD
+		}
+	}
+	@Override
+	public Cliente findOne(Long id) {
+		return em.find(Cliente.class, id); //me busca a la persona mediante su id
+	}
+
+	@Override
+	public void delete(Long id) {
+		em.remove(findOne(id));
+	}
+
+
+}

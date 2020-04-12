@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+	<title th:text="${titulo}"></title>
+</head>
+<body>
+
+	<nav th:replace="layout/layout :: menu"></nav>
+
+	<div class="container">
+	<h2>Clientes</h2>
+	<a th:href="@{/cliente/form}">Crear Cliente</a>
+	<table>
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>Nombre</th>
+			<th>Apellido</th>
+			<th>Email</th>
+			<th>LLegada</th>
+			<th>Acción</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr th:each="c :${clientes}">
+				<td th:text="${c.id}"></td>
+				<td th:text="${c.nombre}"></td>
+				<td th:text="${c.apellido}"></td>
+				<td th:text="${c.email}"></td>
+				<td th:text="${c.createAt}"></td>
+				<td>
+					<a class="waves-effect waves-blue btn-small"
+					   th:href="@{/cliente/form/} + ${c.id}" th:text="'Editar'"></a>
+					<a class="waves-effect waves-light btn-small"
+					   th:href="@{/cliente/delete/} + ${c.id}" th:text="'Eliminar'"
+					   	onclick="alert('¿Estas seguro de eliminar este registro?)'"></a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+	<footer th:replace="layout/layout :: foot"></footer>
+</body>
+</html>

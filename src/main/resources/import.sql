@@ -1,0 +1,2 @@
+insert into clientes (id,nombre,apellido,email,create_at)values(1,'José','Pantigoso','pantigosomiguel59@gmail.com','2020-12-12 10:10:10')
+insert into clientes (id,nombre,apellido,email,create_at)values(2,'Raul','Abduzcan','auronplay@gmail.com','2020-12-12 10:10:10')
